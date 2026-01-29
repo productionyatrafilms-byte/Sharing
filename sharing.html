@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.css" />
+</head>
+
+<body class="sharing-page">
+  <main>
+    <nav>
+      <div class="home-btn">
+        <a href="index.html">
+          <img src="assets/home.png" alt="">
+        </a>
+      </div>
+      <div class="translate-button-container">
+        <div class="translate-button" id="englishButton">E</div>
+        <div class="translate-button" id="hindiButton">H</div>
+        <div class="translate-button" id="gujaratiButton">G</div>
+      </div>
+    </nav>
+    <div class="sharing-title">
+      <span>Sharing</span>
+    </div>
+    <!-- Slider main container -->
+    <div class="wrap">
+      <div class="swiper mySwiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <div class="swiper-slide s1">
+            <!-- example video slide: replace src with your video file (mp4/webm). poster provides fallback image -->
+            <video class="slide-media" muted playsinline preload="metadata" poster="assets/slide-1.png">
+              <source src="assets/videos/1.1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="swiper-slide s2">
+            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-2.png">
+              <source src="assets/videos/2.1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="swiper-slide s3">
+            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-3.png">
+              <source src="assets/videos/3.1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="swiper-slide s4">
+            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-4.png">
+              <source src="assets/videos/4.1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="swiper-slide s4">
+            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-5.png">
+              <source src="assets/videos/5.1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="swiper-slide s4">
+            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-6.png">
+              <source src="assets/videos/6.1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="swiper-slide s4">
+            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-7.png">
+              <source src="assets/videos/7.1.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="swiper-slide s4">
+            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-8.png">
+              <source src="assets/videos/8.1mp4.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="swiper-pagination"></div>
+        <!-- ✅ Navigation -->
+        <div class="navigation-btn">
+          <div class="swiper-button-prev">‹</div>
+          <div class="swiper-button-next">›</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+
+</html>
