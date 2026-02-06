@@ -1,18 +1,59 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css");
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
 
 html, body {
   width: 100%;
   height: 100%;
-  
 }
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Baloo 2", sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+@font-face {
+  font-family: "Myriad Pro";
+  src: url("./fonts/MyriadPro-Regular.otf") format("opentype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Bree Serif";
+  src: url("./fonts/Bree%20Serif%20Bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Araboto";
+  src: url("./fonts/Araboto%20Black%20400.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Baloo";
+  src: url("./fonts/Baloo%20Regular%20400.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Boldoa";
+  src: url("./fonts/Boldoa%20Mat.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Chaparral Pro";
+  src: url("./fonts/ChaparralPro-Bold.otf") format("opentype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "ITF Devanagari";
+  src: url("./fonts/ITFDevanagari-Bold-02.otf") format("opentype");
+  font-weight: 700;
+}
+body {
+  font-family: "Myriad Pro", sans-serif;
 }
 
 .home-pg {
@@ -118,7 +159,8 @@ nav .translate-button-container {
   display: grid;
   place-items: center;
   cursor: pointer;
-  font-size: 1.5vw;
+  padding: 0.5vw;
+  font-size: 2;
   color: white;
   font-weight: 700;
   /* transform: scale(1); */
@@ -136,11 +178,7 @@ nav .translate-button-container {
   /* transform: scale(1.12); */
 }
 
-.lang-active {
-  background-color: white;
-  color: #7f67d8;
-  font-size: 1.3vw;
-}
+
 
 .lang-active {
   background-color: white !important;
