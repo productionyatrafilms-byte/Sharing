@@ -16,6 +16,33 @@ document.addEventListener("DOMContentLoaded", () => {
   let translations = null;
   let swiper = null;
 
+  // Language button audio
+  const languageAudios = {
+    en: new Audio("./assets/audio/Eng.mpeg"),
+    hi: new Audio("./assets/audio/Hin.mpeg"),
+    gu: new Audio("./assets/audio/Guj.mpeg"),
+  };
+
+  Object.values(languageAudios).forEach((audio) => {
+    audio.preload = "auto";
+  });
+
+  function playLanguageAudio(lang) {
+    Object.values(languageAudios).forEach((audio) => {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+
+    const audio = languageAudios[lang];
+
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch((err) => {
+        console.log("Audio play failed:", err);
+      });
+    }
+  }
+
   async function loadTranslations() {
     if (translations) return translations;
 
@@ -91,16 +118,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   englishButton?.addEventListener("click", async () => {
+    playLanguageAudio("en");
     await applyLanguage("en");
     await updateDialogueFromSlide();
   });
 
   hindiButton?.addEventListener("click", async () => {
+    playLanguageAudio("hi");
     await applyLanguage("hi");
     await updateDialogueFromSlide();
   });
 
   gujaratiButton?.addEventListener("click", async () => {
+    playLanguageAudio("gu");
     await applyLanguage("gu");
     await updateDialogueFromSlide();
   });
@@ -160,7 +190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         () => {
           window.location.href = "pranam.html";
         },
-        { once: true }
+        { once: true },
       );
     });
 
@@ -178,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function playActiveVideo() {
       const activeVideo = document.querySelector(
-        ".mySwiper .swiper-slide-active .slide-media"
+        ".mySwiper .swiper-slide-active .slide-media",
       );
 
       if (activeVideo && activeVideo.tagName === "VIDEO") {

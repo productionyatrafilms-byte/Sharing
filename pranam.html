@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body class="sharing-page">
     <main>
       <nav>
@@ -14,14 +15,17 @@
             <img src="assets/back-btn.png" alt="" />
           </a>
         </div>
+
         <div class="translate-button-container">
           <div class="translate-button" id="englishButton">E</div>
           <div class="translate-button" id="hindiButton">H</div>
           <div class="translate-button" id="gujaratiButton">G</div>
         </div>
       </nav>
+
       <div class="pranam">
         <img class="pranam-img" src="assets/pranam.png" alt="" />
+
         <div class="home-btn-img">
           <a href="index.html">
             <img src="assets/home-eng.png" alt="" />
@@ -29,7 +33,58 @@
         </div>
       </div>
     </main>
+
+    <!-- Audio files -->
+    <audio id="homeAudio" src="assets/audio/1.mp3" preload="auto"></audio>
+    <audio id="popAudio" src="assets/audio/pop.mp3" preload="auto"></audio>
+
     <script src="script.js"></script>
 
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const homeBtnLink = document.querySelector(".home-btn-img a");
+        const backBtnLink = document.querySelector(".back-btn-link a");
+
+        const homeAudio = document.getElementById("homeAudio");
+        const popAudio = document.getElementById("popAudio");
+
+        function playAudio(audio) {
+          if (!audio) return;
+
+          audio.pause();
+          audio.currentTime = 0;
+
+          audio.play().catch((err) => {
+            console.log("Audio play failed:", err);
+          });
+        }
+
+        homeBtnLink?.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const homeUrl = homeBtnLink.getAttribute("href");
+
+          homeBtnLink.style.pointerEvents = "none";
+          playAudio(homeAudio);
+
+          setTimeout(() => {
+            window.location.href = homeUrl;
+          }, 1500);
+        });
+
+        backBtnLink?.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const backUrl = backBtnLink.getAttribute("href");
+
+          backBtnLink.style.pointerEvents = "none";
+          playAudio(popAudio);
+
+          setTimeout(() => {
+            window.location.href = backUrl;
+          }, 100);
+        });
+      });
+    </script>
   </body>
 </html>

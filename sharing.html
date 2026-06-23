@@ -1,109 +1,314 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-lang-key="homeTitle"></title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-lang-key="homeTitle"></title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.css" />
-</head>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.css"
+    />
 
-<body class="sharing-page">
-  <main>
-    <nav>
-      <div class="home-btn">
-        <a href="index.html">
-          <img src="assets/home.png" alt="">
-        </a>
-      </div>
-      <div class="translate-button-container">
-        <div class="translate-button" id="englishButton">E</div>
-        <div class="translate-button" id="hindiButton">H</div>
-        <div class="translate-button" id="gujaratiButton">G</div>
-      </div>
-    </nav>
-    <div class="sharing-title">
-      <span data-lang-key="homeTitle">Sharing</span>
-    </div>
-    <!-- Slider main container -->
-    <div class="wrap">
-      <div class="dialogue-box">
-        <img class="dialogue-overlay" id="dialogueOverlay" src="./assets/2.png" alt="">
-        <div class="dialogue-text1" >
-          <span  id="dialogueText1"></span>
+    <style>
+      main {
+        opacity: 0;
+        transform: translateY(15px);
+        transition: opacity 1s ease, transform 1s ease;
+        pointer-events: none;
+      }
+
+      body.page-visible main {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+    </style>
+  </head>
+
+  <body class="sharing-page">
+    <main>
+      <nav>
+        <div class="home-btn">
+          <a href="index.html">
+            <img src="assets/home.png" alt="" />
+          </a>
         </div>
-        <div class="dialogue-text2" >
-          <span  id="dialogueText2"></span>
+
+        <div class="translate-button-container">
+          <div class="translate-button" id="englishButton">E</div>
+          <div class="translate-button" id="hindiButton">H</div>
+          <div class="translate-button" id="gujaratiButton">G</div>
         </div>
+      </nav>
+
+      <div class="sharing-title">
+        <span data-lang-key="homeTitle">Sharing</span>
       </div>
-      <div class="swiper mySwiper">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
-          <div class="swiper-slide s1" data-dialogue="./assets/2.png" data-dialogue-key1="girl1" data-dialogue-key2="boy1">
-            <video class="slide-media" muted playsinline preload="metadata" poster="assets/slide-1.png">
-              <source src="assets/videos/1.mp4" mute type="video/mp4">
-            </video>
+
+      <div class="wrap">
+        <div class="dialogue-box">
+          <img
+            class="dialogue-overlay"
+            id="dialogueOverlay"
+            src="./assets/2.png"
+            alt=""
+          />
+
+          <div class="dialogue-text1">
+            <span id="dialogueText1"></span>
           </div>
-          <div class="swiper-slide s2"  data-dialogue="./assets/2.png" data-dialogue-key1="girl2" data-dialogue-key2="boy2">
-            <video class="slide-media" muted playsinline preload="metadata" poster="assets/slide-2.png">
-              <source src="assets/videos/2.mp4" mute type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="swiper-slide s3" data-dialogue="./assets/2.png" data-dialogue-key1="girl3" data-dialogue-key2="boy3">
-            <video class="slide-media" muted playsinline preload="metadata" poster="assets/slide-3.png">
-              <source src="assets/videos/3.mp4" mute type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="swiper-slide s4" data-dialogue="./assets/2.png" data-dialogue-key1="girl4" data-dialogue-key2="boy4">
-            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-4.png">
-              <source src="assets/videos/4.mp4" mute type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="swiper-slide s5" data-dialogue="./assets/2.png" data-dialogue-key1="girl5" data-dialogue-key2="boy5">
-            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-5.png">
-              <source src="assets/videos/5.mp4" mute type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="swiper-slide s6 " data-dialogue="./assets/2.png" data-dialogue-key1="girl6" data-dialogue-key2="boy6">
-            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-6.png">
-              <source src="assets/videos/6.mp4" mute type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="swiper-slide s7" data-dialogue="./assets/2.png" data-dialogue-key1="girl7" data-dialogue-key2="boy7">
-            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-7.png">
-              <source src="assets/videos/7.mp4" mute type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-          <div class="swiper-slide s8"data-dialogue="./assets/2.png" data-dialogue-key1="girl8" data-dialogue-key2="boy8">
-            <video class="slide-media" muted playsinline loop preload="metadata" poster="assets/slide-8.png">
-              <source src="assets/videos/8.mp4" mute type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+
+          <div class="dialogue-text2">
+            <span id="dialogueText2"></span>
           </div>
         </div>
 
-        <!-- Pagination -->
-        <div class="swiper-pagination"></div>
-        <!-- ✅ Navigation -->
-        <div class="navigation-btn">
-          <div class="swiper-button-prev">‹</div>
-          <div class="swiper-button-next">›</div>
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <div
+              class="swiper-slide s1"
+              data-dialogue-img="./assets/2.png"
+              data-dialogue-key1="girl1"
+              data-dialogue-key2="boy1"
+            >
+              <video
+                class="slide-media"
+                muted
+                playsinline
+                preload="metadata"
+                poster="assets/slide-1.png"
+              >
+                <source src="assets/videos/1.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            <div
+              class="swiper-slide s2"
+              data-dialogue-img="./assets/2.png"
+              data-dialogue-key1="girl2"
+              data-dialogue-key2="boy2"
+            >
+              <video
+                class="slide-media"
+                muted
+                playsinline
+                preload="metadata"
+                poster="assets/slide-2.png"
+              >
+                <source src="assets/videos/2.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            <div
+              class="swiper-slide s3"
+              data-dialogue-img="./assets/2.png"
+              data-dialogue-key1="girl3"
+              data-dialogue-key2="boy3"
+            >
+              <video
+                class="slide-media"
+                muted
+                playsinline
+                preload="metadata"
+                poster="assets/slide-3.png"
+              >
+                <source src="assets/videos/3.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            <div
+              class="swiper-slide s4"
+              data-dialogue-img="./assets/2.png"
+              data-dialogue-key1="girl4"
+              data-dialogue-key2="boy4"
+            >
+              <video
+                class="slide-media"
+                muted
+                playsinline
+                loop
+                preload="metadata"
+                poster="assets/slide-4.png"
+              >
+                <source src="assets/videos/4.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            <div
+              class="swiper-slide s5"
+              data-dialogue-img="./assets/2.png"
+              data-dialogue-key1="girl5"
+              data-dialogue-key2="boy5"
+            >
+              <video
+                class="slide-media"
+                muted
+                playsinline
+                loop
+                preload="metadata"
+                poster="assets/slide-5.png"
+              >
+                <source src="assets/videos/5.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            <div
+              class="swiper-slide s6"
+              data-dialogue-img="./assets/2.png"
+              data-dialogue-key1="girl6"
+              data-dialogue-key2="boy6"
+            >
+              <video
+                class="slide-media"
+                muted
+                playsinline
+                loop
+                preload="metadata"
+                poster="assets/slide-6.png"
+              >
+                <source src="assets/videos/6.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            <div
+              class="swiper-slide s7"
+              data-dialogue-img="./assets/2.png"
+              data-dialogue-key1="girl7"
+              data-dialogue-key2="boy7"
+            >
+              <video
+                class="slide-media"
+                muted
+                playsinline
+                loop
+                preload="metadata"
+                poster="assets/slide-7.png"
+              >
+                <source src="assets/videos/7.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+            <div
+              class="swiper-slide s8"
+              data-dialogue-img="./assets/2.png"
+              data-dialogue-key1="girl8"
+              data-dialogue-key2="boy8"
+            >
+              <video
+                class="slide-media"
+                muted
+                playsinline
+                loop
+                preload="metadata"
+                poster="assets/slide-8.png"
+              >
+                <source src="assets/videos/8.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
+          <div class="swiper-pagination"></div>
+
+          <div class="navigation-btn">
+            <div class="swiper-button-prev">‹</div>
+            <div class="swiper-button-next">›</div>
+          </div>
         </div>
       </div>
-    </div>
-    </div>
-  </main>
+    </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.js"></script>
-  <script src="script.js"></script>
+    <audio id="swipeAudio" src="assets/audio/swipe.mp3" preload="auto"></audio>
+    <audio id="popAudio" src="assets/audio/pop.mp3" preload="auto"></audio>
 
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@latest/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
 
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(() => {
+          document.body.classList.add("page-visible");
+        }, 250);
+
+        const swipeAudio = document.getElementById("swipeAudio");
+        const popAudio = document.getElementById("popAudio");
+
+        const prevBtn = document.querySelector(".swiper-button-prev");
+        const nextBtn = document.querySelector(".swiper-button-next");
+        const homeBtnLink = document.querySelector(".home-btn a");
+
+        function playAudio(audio) {
+          if (!audio) return;
+
+          audio.pause();
+          audio.currentTime = 0;
+
+          audio.play().catch((err) => {
+            console.log("Audio play failed:", err);
+          });
+        }
+
+        function getSwiper() {
+          return document.querySelector(".mySwiper")?.swiper;
+        }
+
+        prevBtn?.addEventListener(
+          "click",
+          (e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            playAudio(swipeAudio);
+
+            const swiper = getSwiper();
+
+            if (swiper && !swiper.isBeginning) {
+              swiper.slidePrev();
+            }
+          },
+          true
+        );
+
+        nextBtn?.addEventListener(
+          "click",
+          (e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            playAudio(swipeAudio);
+
+            const swiper = getSwiper();
+
+            if (swiper && !swiper.isEnd) {
+              swiper.slideNext();
+              return;
+            }
+
+            setTimeout(() => {
+              window.location.href = "pranam.html";
+            }, 150);
+          },
+          true
+        );
+
+        homeBtnLink?.addEventListener(
+          "click",
+          (e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            const homeUrl = homeBtnLink.getAttribute("href");
+
+            playAudio(popAudio);
+
+            setTimeout(() => {
+              window.location.href = homeUrl;
+            }, 300);
+          },
+          true
+        );
+      });
+    </script>
+  </body>
 </html>
