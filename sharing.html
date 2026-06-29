@@ -15,7 +15,9 @@
       main {
         opacity: 0;
         transform: translateY(15px);
-        transition: opacity 1s ease, transform 1s ease;
+        transition:
+          opacity 1s ease,
+          transform 1s ease;
         pointer-events: none;
       }
 
@@ -217,6 +219,10 @@
           </div>
         </div>
       </div>
+      <a href="pranam.html" class="pranam-link hidden">
+        <img src="./assets/arowAsset.png" alt="" />
+        <span data-lang-key="pranam"></span>
+      </a>
     </main>
 
     <audio id="swipeAudio" src="assets/audio/swipe.mp3" preload="auto"></audio>
@@ -267,7 +273,7 @@
               swiper.slidePrev();
             }
           },
-          true
+          true,
         );
 
         nextBtn?.addEventListener(
@@ -289,7 +295,7 @@
               window.location.href = "pranam.html";
             }, 150);
           },
-          true
+          true,
         );
 
         homeBtnLink?.addEventListener(
@@ -306,7 +312,7 @@
               window.location.href = homeUrl;
             }, 300);
           },
-          true
+          true,
         );
       });
     </script>
