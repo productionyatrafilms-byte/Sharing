@@ -35,7 +35,7 @@
     </main>
 
     <!-- Audio files -->
-    <audio id="homeAudio" src="assets/audio/1.mp3" preload="auto"></audio>
+    <audio id="pranamAudio" src="assets/audio/pranam.mp3" preload="auto"></audio>
     <audio id="popAudio" src="assets/audio/pop.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
@@ -45,7 +45,7 @@
         const homeBtnLink = document.querySelector(".home-btn-img a");
         const backBtnLink = document.querySelector(".back-btn-link a");
 
-        const homeAudio = document.getElementById("homeAudio");
+        const pranamAudio = document.getElementById("pranamAudio");
         const popAudio = document.getElementById("popAudio");
 
         function playAudio(audio) {
@@ -59,19 +59,21 @@
           });
         }
 
+        // Play pranam audio on page load
+        playAudio(pranamAudio);
+
+        // Home button: no audio on click
         homeBtnLink?.addEventListener("click", (e) => {
           e.preventDefault();
 
           const homeUrl = homeBtnLink.getAttribute("href");
 
           homeBtnLink.style.pointerEvents = "none";
-          playAudio(homeAudio);
 
-          setTimeout(() => {
-            window.location.href = homeUrl;
-          }, 1500);
+          window.location.href = homeUrl;
         });
 
+        // Back button: pop audio still plays
         backBtnLink?.addEventListener("click", (e) => {
           e.preventDefault();
 

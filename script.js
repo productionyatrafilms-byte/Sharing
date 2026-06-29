@@ -1,8 +1,14 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const LANG_KEY = "selectedLanguage";
   const DEFAULT_LANG = "en";
+  const VALID_LANGS = ["en", "hi", "gu"];
 
   let currentLang = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
+
+  if (!VALID_LANGS.includes(currentLang)) {
+    currentLang = DEFAULT_LANG;
+    localStorage.setItem(LANG_KEY, DEFAULT_LANG);
+  }
 
   const englishButton = document.getElementById("englishButton");
   const hindiButton = document.getElementById("hindiButton");
@@ -13,10 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const overlayText2 = document.getElementById("dialogueText2");
   const dialogueBox = document.querySelector(".dialogue-box");
 
-  let translations = null;
+  const prevBtn = document.querySelector(".swiper-button-prev");
+  const nextBtn = document.querySelector(".swiper-button-next");
+  const pranamLink = document.querySelector(".pranam-link");
+
+  let translations = {};
   let swiper = null;
 
-  // Language button audio
   const languageAudios = {
     en: new Audio("./assets/audio/Eng.mpeg"),
     hi: new Audio("./assets/audio/Hin.mpeg"),
@@ -44,18 +53,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function loadTranslations() {
-    if (translations) return translations;
-
     try {
-      const res = await fetch("/data.json");
-      if (!res.ok) throw new Error("JSON not found");
+      const res = await fetch("./data.json");
+
+      if (!res.ok) {
+        throw new Error("data.json not found");
+      }
+
       translations = await res.json();
     } catch (err) {
       console.error("Translation load failed:", err);
       translations = {};
     }
-
-    return translations;
   }
 
   function clearActive() {
@@ -72,70 +81,121 @@ document.addEventListener("DOMContentLoaded", () => {
     if (lang === "gu") gujaratiButton?.classList.add("lang-active");
   }
 
-  async function applyLanguage(lang) {
+  function updateStaticText() {
+    document.querySelectorAll("[data-lang-key]").forEach((el) => {
+      const key = el.getAttribute("data-lang-key");
+
+      if (translations?.[currentLang]?.[key] != null) {
+        el.textContent = translations[currentLang][key];
+      }
+    });
+  }
+
+  function updateDialogueFromSlide() {
+    if (!swiper) return;
+
+    const activeSlide = swiper.slides[swiper.activeIndex];
+
+    if (!activeSlide) return;
+
+    const imgSrc =
+      activeSlide.getAttribute("data-dialogue-img") || "./assets/2.png";
+    const key1 = activeSlide.getAttribute("data-dialogue-key1") || "";
+    const key2 = activeSlide.getAttribute("data-dialogue-key2") || "";
+
+    if (bubbleImg) {
+      bubbleImg.src = imgSrc;
+    }
+
+    if (overlayText1) {
+      overlayText1.textContent = translations?.[currentLang]?.[key1] || "";
+    }
+
+    if (overlayText2) {
+      overlayText2.textContent = translations?.[currentLang]?.[key2] || "";
+    }
+  }
+
+  function applyLanguage(lang) {
     currentLang = lang;
     localStorage.setItem(LANG_KEY, lang);
-
-    const data = await loadTranslations();
 
     document.documentElement.lang = lang;
     document.body.setAttribute("data-lang", lang);
 
-    document.querySelectorAll("[data-lang-key]").forEach((el) => {
-      const key = el.getAttribute("data-lang-key");
-
-      if (data?.[lang] && key && data[lang][key] != null) {
-        el.textContent = data[lang][key];
-      }
-    });
-
+    updateStaticText();
+    updateDialogueFromSlide();
     setActiveUI(lang);
   }
 
-  async function updateDialogueFromSlide() {
-    if (!swiper || !bubbleImg || !overlayText1 || !overlayText2) return;
+  function updateNavVisibility() {
+    if (!swiper) return;
 
-    const data = await loadTranslations();
-    const activeSlide = swiper.slides[swiper.activeIndex];
+    if (prevBtn) {
+      prevBtn.style.visibility = swiper.isBeginning ? "hidden" : "visible";
+    }
 
-    const imgSrc =
-      activeSlide?.getAttribute("data-dialogue-img") || "./assets/2.png";
+    if (nextBtn) {
+      nextBtn.style.visibility = swiper.isEnd ? "hidden" : "visible";
+    }
 
-    const key1 = activeSlide?.getAttribute("data-dialogue-key1") || "";
-    const key2 = activeSlide?.getAttribute("data-dialogue-key2") || "";
-
-    bubbleImg.src = imgSrc;
-
-    overlayText1.textContent =
-      data?.[currentLang] && key1 && data[currentLang][key1] != null
-        ? data[currentLang][key1]
-        : "";
-
-    overlayText2.textContent =
-      data?.[currentLang] && key2 && data[currentLang][key2] != null
-        ? data[currentLang][key2]
-        : "";
+    if (pranamLink) {
+      if (swiper.isEnd) {
+        pranamLink.classList.remove("hidden");
+        pranamLink.style.display = "flex";
+        pranamLink.style.visibility = "visible";
+        pranamLink.style.opacity = "1";
+        pranamLink.style.pointerEvents = "auto";
+      } else {
+        pranamLink.classList.add("hidden");
+        pranamLink.style.display = "none";
+        pranamLink.style.visibility = "hidden";
+        pranamLink.style.opacity = "0";
+        pranamLink.style.pointerEvents = "none";
+      }
+    }
   }
 
-  englishButton?.addEventListener("click", async () => {
+  function pauseAllVideos() {
+    document.querySelectorAll(".mySwiper .slide-media").forEach((video) => {
+      try {
+        video.pause();
+        video.currentTime = 0;
+      } catch (err) {}
+    });
+  }
+
+  function playActiveVideo() {
+    const activeVideo = document.querySelector(
+      ".mySwiper .swiper-slide-active .slide-media",
+    );
+
+    if (activeVideo && activeVideo.tagName === "VIDEO") {
+      try {
+        activeVideo.muted = true;
+        activeVideo.loop = true;
+        activeVideo.currentTime = 0;
+        activeVideo.play().catch(() => {});
+      } catch (err) {}
+    }
+  }
+
+  englishButton?.addEventListener("click", () => {
     playLanguageAudio("en");
-    await applyLanguage("en");
-    await updateDialogueFromSlide();
+    applyLanguage("en");
   });
 
-  hindiButton?.addEventListener("click", async () => {
+  hindiButton?.addEventListener("click", () => {
     playLanguageAudio("hi");
-    await applyLanguage("hi");
-    await updateDialogueFromSlide();
+    applyLanguage("hi");
   });
 
-  gujaratiButton?.addEventListener("click", async () => {
+  gujaratiButton?.addEventListener("click", () => {
     playLanguageAudio("gu");
-    await applyLanguage("gu");
-    await updateDialogueFromSlide();
+    applyLanguage("gu");
   });
 
-  applyLanguage(currentLang);
+  await loadTranslations();
 
   if (typeof Swiper !== "undefined" && document.querySelector(".mySwiper")) {
     swiper = new Swiper(".mySwiper", {
@@ -145,88 +205,31 @@ document.addEventListener("DOMContentLoaded", () => {
         clickable: true,
       },
       speed: 500,
-
       on: {
         slideChangeTransitionStart() {
           dialogueBox?.classList.add("hide");
         },
-        async slideChangeTransitionEnd() {
-          await updateDialogueFromSlide();
+
+        slideChangeTransitionEnd() {
+          updateDialogueFromSlide();
           dialogueBox?.classList.remove("hide");
+
+          pauseAllVideos();
+          playActiveVideo();
+        },
+
+        slideChange() {
+          updateNavVisibility();
         },
       },
     });
 
     updateDialogueFromSlide();
-
-    const prevBtn = document.querySelector(".swiper-button-prev");
-    const nextBtn = document.querySelector(".swiper-button-next");
-    const pageEl = document.querySelector("main");
-
-    function updateNavVisibility() {
-      if (prevBtn) {
-        prevBtn.style.visibility = swiper.isBeginning ? "hidden" : "visible";
-      }
-    }
-
-    prevBtn?.addEventListener("click", (e) => {
-      e.preventDefault();
-      swiper.slidePrev();
-    });
-
-    nextBtn?.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      if (!swiper.isEnd) {
-        swiper.slideNext();
-        return;
-      }
-
-      nextBtn.style.pointerEvents = "none";
-      pageEl?.classList.add("page-exit");
-
-      pageEl?.addEventListener(
-        "transitionend",
-        () => {
-          window.location.href = "pranam.html";
-        },
-        { once: true },
-      );
-    });
-
     updateNavVisibility();
-    swiper.on("slideChange", updateNavVisibility);
-
-    function pauseAllVideos() {
-      document.querySelectorAll(".mySwiper .slide-media").forEach((v) => {
-        try {
-          v.pause();
-          v.currentTime = 0;
-        } catch (e) {}
-      });
-    }
-
-    function playActiveVideo() {
-      const activeVideo = document.querySelector(
-        ".mySwiper .swiper-slide-active .slide-media",
-      );
-
-      if (activeVideo && activeVideo.tagName === "VIDEO") {
-        try {
-          activeVideo.muted = true;
-          activeVideo.loop = true;
-          activeVideo.currentTime = 0;
-          activeVideo.play().catch(() => {});
-        } catch (e) {}
-      }
-    }
 
     pauseAllVideos();
     playActiveVideo();
-
-    swiper.on("slideChangeTransitionEnd", () => {
-      pauseAllVideos();
-      playActiveVideo();
-    });
   }
+
+  applyLanguage(currentLang);
 });

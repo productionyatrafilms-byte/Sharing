@@ -548,3 +548,34 @@ main.page-exit {
   transform: translateX(-90vw) scale(0.96);
   opacity: 0;
 }
+
+.pranam-link {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 5vw;
+  top: 40vw;
+  width: 10vw;
+  height: auto;
+  text-decoration: none;
+
+  animation: pranamPop 1.2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.pranam-link img {
+  position: relative;
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.pranam-link span {
+  position: absolute;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.3vw;
+    font-family: "Myriad Pro";
+}
