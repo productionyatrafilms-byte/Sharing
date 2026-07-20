@@ -49,14 +49,40 @@ body {
 }
 
 @font-face {
-  font-family: "ITF Devanagari";
-  src: url("./fonts/ITFDevanagari-Bold-02.otf") format("opentype");
-  font-weight: 700;
+  font-family: "ITFDevanagari";
+  src: url("./fonts/ITFDevanagari.ttc") format("opentype");
+  font-weight: 700!important;
+}
+
+@font-face {
+  font-family: "NotoSansGujarati";
+  src: url("./fonts/NotoSansGujarati-Regular.ttf") format("opentype");
+  font-weight: 700!important;
 }
 
 body {
   font-family: "Myriad Pro", sans-serif;
 }
+
+body[data-lang="hi"] {
+  font-family: "ITFDevanagari"!important;
+}
+
+body[data-lang="gu"] {
+   font-family: "NotoSansGujarati"!important;
+}
+
+
+body[data-lang="hi"] #dialogueText1, body[data-lang="hi"] #dialogueText2 {
+   line-height: 1.6 !important;
+}
+
+
+body[data-lang="gu"] #dialogueText1, body[data-lang="gu"] #dialogueText2 {
+   line-height: 1.4 !important;
+}
+
+
 
 .home-pg {
   height: 100vh;
@@ -217,7 +243,6 @@ nav {
   background-color: #7f5bd4;
 }
 
-
 .sharing-title {
   display: flex;
   align-items: center;
@@ -315,10 +340,10 @@ nav {
 /* ---- DIALOGUE BOX (animation container) ---- */
 .dialogue-box {
   position: absolute;
-  top: -3vh;
+  top: -2vw;
   left: -5%;
-  width: 60%;
-  height: 8vw;
+  width: 69%;
+  height: 8.5vw;
   z-index: 9999;
   pointer-events: none;
   display: flex;
@@ -345,23 +370,21 @@ nav {
 /* ---- Text 1 ---- */
 #dialogueText1 {
 
-
   line-height: 1.2;
 }
 
 /* ---- Text 2 ---- */
 #dialogueText2 {
-
   text-align: center;
   line-height: 1.2;
 }
 
 .dialogue-text1 {
   position: absolute;
-  left: 2%;
-  top: 2vh;
-  width: 40%;
-  height: 6vw;
+  left:7%;
+  top: 1.2vw;
+  width: 35%;
+  height: 6.2vw;
   font-size: 1.1vw;
   font-weight: 800;
   color: #673dc2;
@@ -376,8 +399,8 @@ nav {
 .dialogue-text2 {
   position: absolute;
   left: 58%;
-  top: 0vh;
-  width: 40%;
+  top: 0.5vw;
+  width: 35%;
   height: 6vw;
   font-size: 1.1vw;
   font-weight: 800;
