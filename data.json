@@ -19,7 +19,8 @@
     "girl8": "What else can \nwe Share?",
     "boy8": "We can Share Books with Friends",
     "home": "Home",
-    "pranam": "Pranam"
+    "pranam": "Pranam",
+    "watch":"Watch Video"
   },
   "hi": {
     "homeTitle": "बाँटना",
@@ -41,7 +42,8 @@
     "girl8": "हम और क्या बाँट \nसकते हैं?",
     "boy8": "हम दोस्तों के साथ किताबें बाँट सकते हैं।",
     "home": "होम",
-    "pranam": "प्रणाम"
+    "pranam": "प्रणाम",
+    "watch":"वीडियो देखें"
   },
   "gu": {
     "homeTitle": "વહેંચવું",
@@ -63,6 +65,7 @@
     "girl8": "આપણે બીજું \nશું વહેંચી શકીએ?",
     "boy8": "આપણે મિત્રો સાથે પુસ્તકો વહેંચી શકીએ.",
     "home": "હોમ",
-    "pranam": "પ્રણામ"
+    "pranam": "પ્રણામ",
+    "watch":"વિડિઓ જુઓ"
   }
 }
