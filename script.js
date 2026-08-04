@@ -2,7 +2,27 @@ document.addEventListener("DOMContentLoaded", async () => {
   const LANG_KEY = "selectedLanguage";
   const DEFAULT_LANG = "en";
   const VALID_LANGS = ["en", "hi", "gu"];
+  
+// ================= LANDSCAPE ALERT =================
 
+let landscapeAlertShown = false;
+
+function checkScreenSize() {
+  const isMobile =
+    /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
+  if (isMobile && window.innerWidth < 768) {
+    if (!landscapeAlertShown) {
+      landscapeAlertShown = true;
+      alert("Please use Landscape!");
+    }
+  } else {
+    landscapeAlertShown = false;
+  }
+}
+
+window.addEventListener("load", checkScreenSize);
+window.addEventListener("resize", checkScreenSize);
   let currentLang = localStorage.getItem(LANG_KEY) || DEFAULT_LANG;
 
   if (!VALID_LANGS.includes(currentLang)) {
