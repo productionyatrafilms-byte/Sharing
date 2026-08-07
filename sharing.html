@@ -1008,6 +1008,9 @@
             document.body.classList.add("video-open");
             videoPopup.classList.add("active");
 
+            // pause the background carousel video while the popup is open
+            pauseAllSlideVideos();
+
             popupVideo.volume = Number(volumeRange.value);
             popupVideo.muted = false;
 
@@ -1039,6 +1042,9 @@
             }
 
             updatePlayIcons();
+
+            // resume the active slide's carousel video now that the popup is closed
+            playActiveSlideVideo();
           }
 
           function toggleMute() {
@@ -1257,6 +1263,87 @@
         }
 
         initVideoBtnVisibility();
+
+        /* ---------- play each slide's own video only while that slide is active/visible ---------- */
+
+        const slideVideos = Array.from(
+          document.querySelectorAll(".swiper-slide .slide-media"),
+        );
+
+        function pauseAllSlideVideos() {
+          slideVideos.forEach((video) => {
+            if (!video.paused) {
+              video.pause();
+            }
+          });
+        }
+
+        function playActiveSlideVideo() {
+          // don't resume a slide video while a popup is open over the blurred main content
+          if (document.body.classList.contains("video-open")) return;
+
+          const swiper = getSwiper();
+          if (!swiper) return;
+
+          const activeVideo = slideVideos[swiper.activeIndex];
+          if (activeVideo) {
+            activeVideo.play().catch(() => {});
+          }
+        }
+
+        function initSlideVideoPlayback() {
+          const swiper = getSwiper();
+
+          if (!swiper) {
+            requestAnimationFrame(initSlideVideoPlayback);
+            return;
+          }
+
+          function updateSlideVideos() {
+            slideVideos.forEach((video, index) => {
+              if (index === swiper.activeIndex) {
+                // slide just became visible — start it from the beginning
+                video.currentTime = 0;
+
+                if (!document.body.classList.contains("video-open")) {
+                  video.play().catch(() => {});
+                }
+              } else if (!video.paused || video.currentTime !== 0) {
+                // any slide that isn't visible anymore — stop and reset it
+                video.pause();
+                video.currentTime = 0;
+              }
+            });
+          }
+
+          // also pause/resume the active slide's video whenever an intro popup opens/closes
+          const bodyObserver = new MutationObserver(() => {
+            if (document.body.classList.contains("video-open")) {
+              pauseAllSlideVideos();
+            } else {
+              playActiveSlideVideo();
+            }
+          });
+
+          bodyObserver.observe(document.body, {
+            attributes: true,
+            attributeFilter: ["class"],
+          });
+
+          updateSlideVideos();
+          swiper.on("slideChange", updateSlideVideos);
+
+          // if the tab is backgrounded, pause; resume the active slide when it's foregrounded again
+          document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+              pauseAllSlideVideos();
+            } else {
+              playActiveSlideVideo();
+            }
+          });
+        }
+
+        initSlideVideoPlayback();
       });
     </script>
   </body>
