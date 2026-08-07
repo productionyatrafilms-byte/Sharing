@@ -437,8 +437,15 @@
       </nav>
 
       <!-- intro video button — visible only while slide 1 is active -->
-      <div class="video-btn" id="introVideoBtn">
-        <button class="start-video-btn" type="button">
+      <div class="video-btn" id="introVideoBtn1">
+        <button class="start-video-btn" type="button" id="startVideoBtn1">
+          <span class="start-text" data-lang-key="watch">START</span>
+        </button>
+      </div>
+
+      <!-- second video button — visible only while slide 7 is active -->
+      <div class="video-btn hidden" id="introVideoBtn2">
+        <button class="start-video-btn" type="button" id="startVideoBtn2">
           <span class="start-text" data-lang-key="watch">START</span>
         </button>
       </div>
@@ -623,24 +630,24 @@
       </a>
     </main>
 
-    <!-- intro video popup -->
-    <div class="video-popup">
-      <div class="video-box">
-        <button class="close-video-btn" type="button">
+    <!-- intro video popup (slide 1) -->
+    <div class="video-popup" id="videoPopup1">
+      <div class="video-box" id="videoBox1">
+        <button class="close-video-btn" type="button" id="closeVideoBtn1">
           <i class="fa-solid fa-xmark"></i>
         </button>
 
-        <div class="popup-video-frame">
+        <div class="popup-video-frame" id="popupVideoFrame1">
           <video
             class="popup-video"
+            id="popupVideo1"
             src="assets/videos/sharing_video.mp4"
-           
             preload="metadata"
             controlsList="nodownload noplaybackrate"
             disablePictureInPicture
           ></video>
 
-          <button class="video-center-play" type="button">
+          <button class="video-center-play" type="button" id="centerPlayBtn1">
             <i class="fa-solid fa-play"></i>
           </button>
 
@@ -648,6 +655,7 @@
             <div class="progress-wrap">
               <input
                 class="video-progress"
+                id="videoProgress1"
                 type="range"
                 min="0"
                 max="100"
@@ -658,24 +666,25 @@
 
             <div class="control-row">
               <div class="control-left">
-                <button class="control-btn play-pause-btn" type="button">
+                <button class="control-btn play-pause-btn" id="playPauseBtn1" type="button">
                   <i class="fa-solid fa-play"></i>
                 </button>
 
                 <div class="time-text">
-                  <span class="current-time">0:00</span>
+                  <span class="current-time" id="currentTime1">0:00</span>
                   /
-                  <span class="total-time">0:00</span>
+                  <span class="total-time" id="totalTime1">0:00</span>
                 </div>
               </div>
 
               <div class="control-right">
-                <button class="control-btn mute-btn" type="button">
+                <button class="control-btn mute-btn" id="muteBtn1" type="button">
                   <i class="fa-solid fa-volume-high"></i>
                 </button>
 
                 <input
                   class="volume-range"
+                  id="volumeRange1"
                   type="range"
                   min="0"
                   max="1"
@@ -683,7 +692,79 @@
                   value="1"
                 />
 
-                <button class="control-btn fullscreen-btn" type="button">
+                <button class="control-btn fullscreen-btn" id="fullscreenBtn1" type="button">
+                  <i class="fa-solid fa-expand"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- second video popup (slide 7) -->
+    <div class="video-popup" id="videoPopup2">
+      <div class="video-box" id="videoBox2">
+        <button class="close-video-btn" type="button" id="closeVideoBtn2">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="popup-video-frame" id="popupVideoFrame2">
+          <video
+            class="popup-video"
+            id="popupVideo2"
+            src="assets/videos/1.webm"
+            preload="metadata"
+            controlsList="nodownload noplaybackrate"
+            disablePictureInPicture
+          ></video>
+
+          <button class="video-center-play" type="button" id="centerPlayBtn2">
+            <i class="fa-solid fa-play"></i>
+          </button>
+
+          <div class="custom-controls">
+            <div class="progress-wrap">
+              <input
+                class="video-progress"
+                id="videoProgress2"
+                type="range"
+                min="0"
+                max="100"
+                value="0"
+                step="0.1"
+              />
+            </div>
+
+            <div class="control-row">
+              <div class="control-left">
+                <button class="control-btn play-pause-btn" id="playPauseBtn2" type="button">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+
+                <div class="time-text">
+                  <span class="current-time" id="currentTime2">0:00</span>
+                  /
+                  <span class="total-time" id="totalTime2">0:00</span>
+                </div>
+              </div>
+
+              <div class="control-right">
+                <button class="control-btn mute-btn" id="muteBtn2" type="button">
+                  <i class="fa-solid fa-volume-high"></i>
+                </button>
+
+                <input
+                  class="volume-range"
+                  id="volumeRange2"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value="1"
+                />
+
+                <button class="control-btn fullscreen-btn" id="fullscreenBtn2" type="button">
                   <i class="fa-solid fa-expand"></i>
                 </button>
               </div>
@@ -708,7 +789,7 @@
         const swipeAudio = document.getElementById("swipeAudio");
         const popAudio = document.getElementById("popAudio");
 
-        // dedicated click sound for the intro video button, same pattern as index.html
+        // dedicated click sound for the intro video buttons, same pattern as index.html
         const videoPlayClickSound = new Audio("./assets/audio/5.mp3");
 
         const prevBtn = document.querySelector(".swiper-button-prev");
@@ -786,38 +867,7 @@
           true,
         );
 
-        /* ---------- intro video button + popup logic ---------- */
-
-        const videoBtnWrap = document.getElementById("introVideoBtn");
-        const startVideoBtn = document.querySelector(".start-video-btn");
-
-        const videoPopup = document.querySelector(".video-popup");
-        const videoBox = document.querySelector(".video-box");
-        const closeVideoBtn = document.querySelector(".close-video-btn");
-        const popupVideo = document.querySelector(".popup-video");
-        const popupVideoFrame = document.querySelector(".popup-video-frame");
-
-        const centerPlayBtn = document.querySelector(".video-center-play");
-        const playPauseBtn = document.querySelector(".play-pause-btn");
-        const playPauseIcon = playPauseBtn.querySelector("i");
-        const centerPlayIcon = centerPlayBtn.querySelector("i");
-
-        const videoProgress = document.querySelector(".video-progress");
-        const currentTimeText = document.querySelector(".current-time");
-        const totalTimeText = document.querySelector(".total-time");
-
-        const muteBtn = document.querySelector(".mute-btn");
-        const muteIcon = muteBtn.querySelector("i");
-        const volumeRange = document.querySelector(".volume-range");
-
-        const fullscreenBtn = document.querySelector(".fullscreen-btn");
-        const fullscreenIcon = fullscreenBtn.querySelector("i");
-
-        let controlsTimer;
-        let lastVolume = 1;
-        let savedVideoTime = 0;
-        let maxAllowedTime = 0;
-        let isProgressDragging = false;
+        /* ---------- reusable intro video button + popup controller ---------- */
 
         function formatTime(time) {
           if (!time || isNaN(time)) return "0:00";
@@ -828,297 +878,355 @@
           return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
         }
 
-        function updatePlayIcons() {
-          if (popupVideo.paused) {
-            playPauseIcon.className = "fa-solid fa-play";
-            centerPlayIcon.className = "fa-solid fa-play";
-            centerPlayBtn.classList.remove("hide");
-          } else {
-            playPauseIcon.className = "fa-solid fa-pause";
-            centerPlayIcon.className = "fa-solid fa-pause";
-            centerPlayBtn.classList.add("hide");
-          }
-        }
+        function createVideoController(suffix, slideIndex) {
+          const videoBtnWrap = document.getElementById(`introVideoBtn${suffix}`);
+          const startVideoBtn = document.getElementById(`startVideoBtn${suffix}`);
 
-        function updateProgress() {
-          if (!popupVideo.duration) return;
+          const videoPopup = document.getElementById(`videoPopup${suffix}`);
+          const videoBox = document.getElementById(`videoBox${suffix}`);
+          const closeVideoBtn = document.getElementById(`closeVideoBtn${suffix}`);
+          const popupVideo = document.getElementById(`popupVideo${suffix}`);
+          const popupVideoFrame = document.getElementById(`popupVideoFrame${suffix}`);
 
-          if (popupVideo.currentTime > maxAllowedTime) {
-            maxAllowedTime = popupVideo.currentTime;
-          }
+          const centerPlayBtn = document.getElementById(`centerPlayBtn${suffix}`);
+          const playPauseBtn = document.getElementById(`playPauseBtn${suffix}`);
+          const playPauseIcon = playPauseBtn.querySelector("i");
+          const centerPlayIcon = centerPlayBtn.querySelector("i");
 
-          savedVideoTime = popupVideo.currentTime;
+          const videoProgress = document.getElementById(`videoProgress${suffix}`);
+          const currentTimeText = document.getElementById(`currentTime${suffix}`);
+          const totalTimeText = document.getElementById(`totalTime${suffix}`);
 
-          if (!isProgressDragging) {
-            const progressValue =
-              (popupVideo.currentTime / popupVideo.duration) * 100;
+          const muteBtn = document.getElementById(`muteBtn${suffix}`);
+          const muteIcon = muteBtn.querySelector("i");
+          const volumeRange = document.getElementById(`volumeRange${suffix}`);
 
-            videoProgress.value = progressValue;
-          }
+          const fullscreenBtn = document.getElementById(`fullscreenBtn${suffix}`);
+          const fullscreenIcon = fullscreenBtn.querySelector("i");
 
-          currentTimeText.textContent = formatTime(popupVideo.currentTime);
-          totalTimeText.textContent = formatTime(popupVideo.duration);
-        }
+          let controlsTimer;
+          let lastVolume = 1;
+          let savedVideoTime = 0;
+          let maxAllowedTime = 0;
+          let isProgressDragging = false;
 
-        function handleProgressInput() {
-          if (!popupVideo.duration) return;
-
-          isProgressDragging = true;
-
-          const selectedTime =
-            (Number(videoProgress.value) / 100) * popupVideo.duration;
-
-          if (selectedTime <= maxAllowedTime) {
-            currentTimeText.textContent = formatTime(selectedTime);
-          } else {
-            const allowedProgress = (maxAllowedTime / popupVideo.duration) * 100;
-
-            videoProgress.value = allowedProgress;
-            currentTimeText.textContent = formatTime(maxAllowedTime);
-          }
-        }
-
-        function handleProgressChange() {
-          if (!popupVideo.duration) return;
-
-          const selectedTime =
-            (Number(videoProgress.value) / 100) * popupVideo.duration;
-
-          if (selectedTime <= maxAllowedTime) {
-            popupVideo.currentTime = selectedTime;
-            savedVideoTime = selectedTime;
-          } else {
-            popupVideo.currentTime = maxAllowedTime;
-
-            const allowedProgress = (maxAllowedTime / popupVideo.duration) * 100;
-
-            videoProgress.value = allowedProgress;
-            savedVideoTime = maxAllowedTime;
-          }
-
-          isProgressDragging = false;
-          updateProgress();
-        }
-
-        function updateMuteIcon() {
-          if (popupVideo.muted || popupVideo.volume === 0) {
-            muteIcon.className = "fa-solid fa-volume-xmark";
-          } else if (popupVideo.volume < 0.5) {
-            muteIcon.className = "fa-solid fa-volume-low";
-          } else {
-            muteIcon.className = "fa-solid fa-volume-high";
-          }
-        }
-
-        function togglePlay() {
-          if (!popupVideo) return;
-
-          if (popupVideo.paused) {
-            popupVideo.play().catch(function () {});
-          } else {
-            popupVideo.pause();
-          }
-        }
-
-        function openVideoPopup() {
-          if (!videoPopup || !popupVideo) return;
-
-          document.body.classList.add("video-open");
-          videoPopup.classList.add("active");
-
-          popupVideo.volume = Number(volumeRange.value);
-          popupVideo.muted = false;
-
-          if (savedVideoTime > 0) {
-            popupVideo.currentTime = savedVideoTime;
-          }
-
-          updateMuteIcon();
-          updatePlayIcons();
-          updateProgress();
-
-          setTimeout(function () {
-            popupVideo.play().catch(function () {});
-          }, 250);
-        }
-
-        function closeVideoPopup() {
-          if (!videoPopup || !popupVideo) return;
-
-          savedVideoTime = popupVideo.currentTime;
-
-          popupVideo.pause();
-
-          videoPopup.classList.remove("active");
-          document.body.classList.remove("video-open");
-
-          if (document.fullscreenElement) {
-            document.exitFullscreen().catch(function () {});
-          }
-
-          updatePlayIcons();
-        }
-
-        function toggleMute() {
-          if (popupVideo.muted || popupVideo.volume === 0) {
-            popupVideo.muted = false;
-            popupVideo.volume = lastVolume || 1;
-            volumeRange.value = popupVideo.volume;
-          } else {
-            lastVolume = popupVideo.volume;
-            popupVideo.muted = true;
-            volumeRange.value = 0;
-          }
-
-          updateMuteIcon();
-        }
-
-        function changeVolume() {
-          const volumeValue = Number(volumeRange.value);
-
-          popupVideo.volume = volumeValue;
-          popupVideo.muted = volumeValue === 0;
-
-          if (volumeValue > 0) {
-            lastVolume = volumeValue;
-          }
-
-          updateMuteIcon();
-        }
-
-        function toggleFullscreen() {
-          if (!document.fullscreenElement) {
-            videoBox.requestFullscreen().catch(function () {});
-          } else {
-            document.exitFullscreen().catch(function () {});
-          }
-        }
-
-        function updateFullscreenIcon() {
-          if (document.fullscreenElement) {
-            fullscreenIcon.className = "fa-solid fa-compress";
-          } else {
-            fullscreenIcon.className = "fa-solid fa-expand";
-          }
-        }
-
-        function showControlsTemporarily() {
-          popupVideoFrame.classList.remove("controls-hidden");
-
-          clearTimeout(controlsTimer);
-
-          if (!popupVideo.paused) {
-            controlsTimer = setTimeout(function () {
-              popupVideoFrame.classList.add("controls-hidden");
-            }, 2200);
-          }
-        }
-
-        if (startVideoBtn) {
-          startVideoBtn.addEventListener("click", function () {
-            playAudio(videoPlayClickSound);
-            openVideoPopup();
-          });
-        }
-
-        if (closeVideoBtn) {
-          closeVideoBtn.addEventListener("click", closeVideoPopup);
-        }
-
-        if (videoPopup) {
-          videoPopup.addEventListener("click", function (e) {
-            if (e.target === videoPopup) {
-              closeVideoPopup();
+          function updatePlayIcons() {
+            if (popupVideo.paused) {
+              playPauseIcon.className = "fa-solid fa-play";
+              centerPlayIcon.className = "fa-solid fa-play";
+              centerPlayBtn.classList.remove("hide");
+            } else {
+              playPauseIcon.className = "fa-solid fa-pause";
+              centerPlayIcon.className = "fa-solid fa-pause";
+              centerPlayBtn.classList.add("hide");
             }
-          });
-        }
+          }
 
-        if (popupVideo) {
-          popupVideo.addEventListener("click", togglePlay);
-          popupVideo.addEventListener("play", updatePlayIcons);
-          popupVideo.addEventListener("pause", updatePlayIcons);
-          popupVideo.addEventListener("timeupdate", updateProgress);
-          popupVideo.addEventListener("loadedmetadata", updateProgress);
+          function updateProgress() {
+            if (!popupVideo.duration) return;
 
-          popupVideo.addEventListener("ended", function () {
-            savedVideoTime = 0;
-            maxAllowedTime = 0;
-            videoProgress.value = 0;
-            currentTimeText.textContent = "0:00";
+            if (popupVideo.currentTime > maxAllowedTime) {
+              maxAllowedTime = popupVideo.currentTime;
+            }
+
+            savedVideoTime = popupVideo.currentTime;
+
+            if (!isProgressDragging) {
+              const progressValue =
+                (popupVideo.currentTime / popupVideo.duration) * 100;
+
+              videoProgress.value = progressValue;
+            }
+
+            currentTimeText.textContent = formatTime(popupVideo.currentTime);
+            totalTimeText.textContent = formatTime(popupVideo.duration);
+          }
+
+          function handleProgressInput() {
+            if (!popupVideo.duration) return;
+
+            isProgressDragging = true;
+
+            const selectedTime =
+              (Number(videoProgress.value) / 100) * popupVideo.duration;
+
+            if (selectedTime <= maxAllowedTime) {
+              currentTimeText.textContent = formatTime(selectedTime);
+            } else {
+              const allowedProgress = (maxAllowedTime / popupVideo.duration) * 100;
+
+              videoProgress.value = allowedProgress;
+              currentTimeText.textContent = formatTime(maxAllowedTime);
+            }
+          }
+
+          function handleProgressChange() {
+            if (!popupVideo.duration) return;
+
+            const selectedTime =
+              (Number(videoProgress.value) / 100) * popupVideo.duration;
+
+            if (selectedTime <= maxAllowedTime) {
+              popupVideo.currentTime = selectedTime;
+              savedVideoTime = selectedTime;
+            } else {
+              popupVideo.currentTime = maxAllowedTime;
+
+              const allowedProgress = (maxAllowedTime / popupVideo.duration) * 100;
+
+              videoProgress.value = allowedProgress;
+              savedVideoTime = maxAllowedTime;
+            }
+
+            isProgressDragging = false;
+            updateProgress();
+          }
+
+          function updateMuteIcon() {
+            if (popupVideo.muted || popupVideo.volume === 0) {
+              muteIcon.className = "fa-solid fa-volume-xmark";
+            } else if (popupVideo.volume < 0.5) {
+              muteIcon.className = "fa-solid fa-volume-low";
+            } else {
+              muteIcon.className = "fa-solid fa-volume-high";
+            }
+          }
+
+          function togglePlay() {
+            if (!popupVideo) return;
+
+            if (popupVideo.paused) {
+              popupVideo.play().catch(function () {});
+            } else {
+              popupVideo.pause();
+            }
+          }
+
+          function open() {
+            if (!videoPopup || !popupVideo) return;
+
+            document.body.classList.add("video-open");
+            videoPopup.classList.add("active");
+
+            popupVideo.volume = Number(volumeRange.value);
+            popupVideo.muted = false;
+
+            if (savedVideoTime > 0) {
+              popupVideo.currentTime = savedVideoTime;
+            }
+
+            updateMuteIcon();
             updatePlayIcons();
-          });
+            updateProgress();
 
-          popupVideo.addEventListener("contextmenu", function (e) {
-            e.preventDefault();
-          });
+            setTimeout(function () {
+              popupVideo.play().catch(function () {});
+            }, 250);
+          }
+
+          function close() {
+            if (!videoPopup || !popupVideo) return;
+
+            savedVideoTime = popupVideo.currentTime;
+
+            popupVideo.pause();
+
+            videoPopup.classList.remove("active");
+            document.body.classList.remove("video-open");
+
+            if (document.fullscreenElement === videoBox) {
+              document.exitFullscreen().catch(function () {});
+            }
+
+            updatePlayIcons();
+          }
+
+          function toggleMute() {
+            if (popupVideo.muted || popupVideo.volume === 0) {
+              popupVideo.muted = false;
+              popupVideo.volume = lastVolume || 1;
+              volumeRange.value = popupVideo.volume;
+            } else {
+              lastVolume = popupVideo.volume;
+              popupVideo.muted = true;
+              volumeRange.value = 0;
+            }
+
+            updateMuteIcon();
+          }
+
+          function changeVolume() {
+            const volumeValue = Number(volumeRange.value);
+
+            popupVideo.volume = volumeValue;
+            popupVideo.muted = volumeValue === 0;
+
+            if (volumeValue > 0) {
+              lastVolume = volumeValue;
+            }
+
+            updateMuteIcon();
+          }
+
+          function toggleFullscreen() {
+            if (document.fullscreenElement !== videoBox) {
+              videoBox.requestFullscreen().catch(function () {});
+            } else {
+              document.exitFullscreen().catch(function () {});
+            }
+          }
+
+          function updateFullscreenIcon() {
+            if (document.fullscreenElement === videoBox) {
+              fullscreenIcon.className = "fa-solid fa-compress";
+            } else {
+              fullscreenIcon.className = "fa-solid fa-expand";
+            }
+          }
+
+          function showControlsTemporarily() {
+            popupVideoFrame.classList.remove("controls-hidden");
+
+            clearTimeout(controlsTimer);
+
+            if (!popupVideo.paused) {
+              controlsTimer = setTimeout(function () {
+                popupVideoFrame.classList.add("controls-hidden");
+              }, 2200);
+            }
+          }
+
+          if (startVideoBtn) {
+            startVideoBtn.addEventListener("click", function () {
+              playAudio(videoPlayClickSound);
+              open();
+            });
+          }
+
+          if (closeVideoBtn) {
+            closeVideoBtn.addEventListener("click", close);
+          }
+
+          if (videoPopup) {
+            videoPopup.addEventListener("click", function (e) {
+              if (e.target === videoPopup) {
+                close();
+              }
+            });
+          }
+
+          if (popupVideo) {
+            popupVideo.addEventListener("click", togglePlay);
+            popupVideo.addEventListener("play", updatePlayIcons);
+            popupVideo.addEventListener("pause", updatePlayIcons);
+            popupVideo.addEventListener("timeupdate", updateProgress);
+            popupVideo.addEventListener("loadedmetadata", updateProgress);
+
+            popupVideo.addEventListener("ended", function () {
+              savedVideoTime = 0;
+              maxAllowedTime = 0;
+              videoProgress.value = 0;
+              currentTimeText.textContent = "0:00";
+              updatePlayIcons();
+            });
+
+            popupVideo.addEventListener("contextmenu", function (e) {
+              e.preventDefault();
+            });
+          }
+
+          if (videoProgress) {
+            videoProgress.addEventListener("input", handleProgressInput);
+            videoProgress.addEventListener("change", handleProgressChange);
+
+            videoProgress.addEventListener("mousedown", function () {
+              isProgressDragging = true;
+            });
+
+            videoProgress.addEventListener("mouseup", handleProgressChange);
+
+            videoProgress.addEventListener("touchstart", function () {
+              isProgressDragging = true;
+            });
+
+            videoProgress.addEventListener("touchend", handleProgressChange);
+          }
+
+          if (centerPlayBtn) {
+            centerPlayBtn.addEventListener("click", togglePlay);
+          }
+
+          if (playPauseBtn) {
+            playPauseBtn.addEventListener("click", togglePlay);
+          }
+
+          if (muteBtn) {
+            muteBtn.addEventListener("click", toggleMute);
+          }
+
+          if (volumeRange) {
+            volumeRange.addEventListener("input", changeVolume);
+          }
+
+          if (fullscreenBtn) {
+            fullscreenBtn.addEventListener("click", toggleFullscreen);
+          }
+
+          if (popupVideoFrame) {
+            popupVideoFrame.addEventListener("mousemove", showControlsTemporarily);
+            popupVideoFrame.addEventListener("click", showControlsTemporarily);
+          }
+
+          document.addEventListener("fullscreenchange", updateFullscreenIcon);
+
+          return {
+            slideIndex,
+            videoBtnWrap,
+            element: videoPopup,
+            open,
+            close,
+            togglePlay,
+            toggleMute,
+            toggleFullscreen,
+          };
         }
 
-        if (videoProgress) {
-          videoProgress.addEventListener("input", handleProgressInput);
-          videoProgress.addEventListener("change", handleProgressChange);
+        // instance 1: slide 1 (index 0), sharing_video.mp4
+        const videoInstance1 = createVideoController(1, 0);
 
-          videoProgress.addEventListener("mousedown", function () {
-            isProgressDragging = true;
-          });
+        // instance 2: slide 7 (index 6), 1.webm
+        const videoInstance2 = createVideoController(2, 6);
 
-          videoProgress.addEventListener("mouseup", handleProgressChange);
+        const videoInstances = [videoInstance1, videoInstance2];
 
-          videoProgress.addEventListener("touchstart", function () {
-            isProgressDragging = true;
-          });
-
-          videoProgress.addEventListener("touchend", handleProgressChange);
-        }
-
-        if (centerPlayBtn) {
-          centerPlayBtn.addEventListener("click", togglePlay);
-        }
-
-        if (playPauseBtn) {
-          playPauseBtn.addEventListener("click", togglePlay);
-        }
-
-        if (muteBtn) {
-          muteBtn.addEventListener("click", toggleMute);
-        }
-
-        if (volumeRange) {
-          volumeRange.addEventListener("input", changeVolume);
-        }
-
-        if (fullscreenBtn) {
-          fullscreenBtn.addEventListener("click", toggleFullscreen);
-        }
-
-        if (popupVideoFrame) {
-          popupVideoFrame.addEventListener("mousemove", showControlsTemporarily);
-          popupVideoFrame.addEventListener("click", showControlsTemporarily);
-        }
-
-        document.addEventListener("fullscreenchange", updateFullscreenIcon);
+        /* ---------- shared keyboard shortcuts (apply to whichever popup is open) ---------- */
 
         document.addEventListener("keydown", function (e) {
-          if (!videoPopup.classList.contains("active")) return;
+          const activeInstance = videoInstances.find((inst) =>
+            inst.element.classList.contains("active"),
+          );
+
+          if (!activeInstance) return;
 
           if (e.key === "Escape") {
-            closeVideoPopup();
+            activeInstance.close();
           }
 
           if (e.code === "Space") {
             e.preventDefault();
-            togglePlay();
+            activeInstance.togglePlay();
           }
 
           if (e.key.toLowerCase() === "m") {
-            toggleMute();
+            activeInstance.toggleMute();
           }
 
           if (e.key.toLowerCase() === "f") {
-            toggleFullscreen();
+            activeInstance.toggleFullscreen();
           }
         });
 
-        /* ---------- show video button only while slide 1 is active ---------- */
+        /* ---------- show each video button only while its own slide is active ---------- */
 
         function initVideoBtnVisibility() {
           const swiper = getSwiper();
@@ -1129,16 +1237,19 @@
           }
 
           function updateVideoBtnVisibility() {
-            if (!videoBtnWrap) return;
+            videoInstances.forEach((inst) => {
+              if (!inst.videoBtnWrap) return;
 
-            if (swiper.activeIndex === 0) {
-              videoBtnWrap.classList.remove("hidden");
-            } else {
-              videoBtnWrap.classList.add("hidden");
-              if (videoPopup.classList.contains("active")) {
-                closeVideoPopup();
+              if (swiper.activeIndex === inst.slideIndex) {
+                inst.videoBtnWrap.classList.remove("hidden");
+              } else {
+                inst.videoBtnWrap.classList.add("hidden");
+
+                if (inst.element.classList.contains("active")) {
+                  inst.close();
+                }
               }
-            }
+            });
           }
 
           updateVideoBtnVisibility();

@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="style.css" />
+
+    <style>
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
   </head>
 
   <body class="sharing-page">
@@ -25,10 +33,14 @@
 
       <div class="pranam">
         <img class="pranam-img" src="assets/pranam.png" alt="" />
-
+        <span class="pranam-text" data-lang-key="pranam"></span>
+        <div class="pranam-video">
+          <video src="./assets/videos/pranam.mp4" autoplay muted></video>
+        </div>
         <div class="home-btn-img">
           <a href="index.html">
-            <img src="assets/home-eng.png" alt="" />
+            <span data-lang-key="home"></span>
+            <img src="./assets/home-btn-1.png" alt="" />
           </a>
         </div>
       </div>
@@ -49,12 +61,12 @@
         const popAudio = document.getElementById("popAudio");
 
         function playAudio(audio) {
-          if (!audio) return;
+          if (!audio) return Promise.resolve();
 
           audio.pause();
           audio.currentTime = 0;
 
-          audio.play().catch((err) => {
+          return audio.play().catch((err) => {
             console.log("Audio play failed:", err);
           });
         }
@@ -62,18 +74,21 @@
         // Play pranam audio on page load
         playAudio(pranamAudio);
 
-        // Home button: no audio on click
+        // Home button: pop audio plays, then navigate after a short delay
         homeBtnLink?.addEventListener("click", (e) => {
           e.preventDefault();
 
           const homeUrl = homeBtnLink.getAttribute("href");
 
           homeBtnLink.style.pointerEvents = "none";
+          playAudio(popAudio);
 
-          window.location.href = homeUrl;
+          setTimeout(() => {
+            window.location.href = homeUrl;
+          }, 300);
         });
 
-        // Back button: pop audio still plays
+        // Back button: pop audio plays, then navigate after a short delay
         backBtnLink?.addEventListener("click", (e) => {
           e.preventDefault();
 
@@ -84,7 +99,113 @@
 
           setTimeout(() => {
             window.location.href = backUrl;
-          }, 100);
+          }, 300);
+        });
+      });
+    </script>
+  </body>
+</html><!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body class="sharing-page">
+    <main>
+      <nav>
+        <div class="back-btn-link">
+          <a href="sharing.html">
+            <img src="assets/back-btn.png" alt="" />
+          </a>
+        </div>
+
+        <div class="translate-button-container">
+          <div class="translate-button" id="englishButton">E</div>
+          <div class="translate-button" id="hindiButton">H</div>
+          <div class="translate-button" id="gujaratiButton">G</div>
+        </div>
+      </nav>
+
+      <div class="pranam">
+        <img class="pranam-img" src="assets/pranam.png" alt="" />
+        <span class="pranam-text" data-lang-key="pranam"></span>
+        <div class="pranam-video">
+          <video src="./assets/videos/pranam.mp4" autoplay muted></video>
+        </div>
+        <div class="home-btn-img">
+          <a href="index.html">
+            <span data-lang-key="home"></span>
+            <img src="./assets/home-btn-1.png" alt="" />
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Audio files -->
+    <audio id="pranamAudio" src="assets/audio/pranam.mp3" preload="auto"></audio>
+    <audio id="popAudio" src="assets/audio/pop.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const homeBtnLink = document.querySelector(".home-btn-img a");
+        const backBtnLink = document.querySelector(".back-btn-link a");
+
+        const pranamAudio = document.getElementById("pranamAudio");
+        const popAudio = document.getElementById("popAudio");
+
+        function playAudio(audio) {
+          if (!audio) return Promise.resolve();
+
+          audio.pause();
+          audio.currentTime = 0;
+
+          return audio.play().catch((err) => {
+            console.log("Audio play failed:", err);
+          });
+        }
+
+        // Play pranam audio on page load
+        playAudio(pranamAudio);
+
+        // Home button: pop audio plays, then navigate after a short delay
+        homeBtnLink?.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const homeUrl = homeBtnLink.getAttribute("href");
+
+          homeBtnLink.style.pointerEvents = "none";
+          playAudio(popAudio);
+
+          setTimeout(() => {
+            window.location.href = homeUrl;
+          }, 300);
+        });
+
+        // Back button: pop audio plays, then navigate after a short delay
+        backBtnLink?.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const backUrl = backBtnLink.getAttribute("href");
+
+          backBtnLink.style.pointerEvents = "none";
+          playAudio(popAudio);
+
+          setTimeout(() => {
+            window.location.href = backUrl;
+          }, 300);
         });
       });
     </script>
