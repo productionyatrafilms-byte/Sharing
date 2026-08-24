@@ -73,18 +73,13 @@ window.addEventListener("resize", checkScreenSize);
   }
 
   async function loadTranslations() {
-    try {
-      const res = await fetch("./data.json");
-
-      if (!res.ok) {
-        throw new Error("data.json not found");
-      }
-
-      translations = await res.json();
-    } catch (err) {
-      console.error("Translation load failed:", err);
+    if (typeof TRANSLATIONS === "undefined") {
+      console.error("Translation load failed: data.js not loaded");
       translations = {};
+      return;
     }
+
+    translations = TRANSLATIONS;
   }
 
   function clearActive() {
