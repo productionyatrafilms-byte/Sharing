@@ -12,10 +12,6 @@
 
     <link rel="stylesheet" href="globals.css" />
     <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="fontawesome/css/all.min.css"
-    />
 
     <style>
       /* ---------- intro video button + popup (theme-matched) ---------- */
@@ -408,8 +404,8 @@
       #homeTitleLink .home-title::after {
   content: "Click Here";
   position: absolute;
-  left: 50%;
-  bottom: 0vw;
+  right: 0.8vw;
+  bottom: 1.65vw;
   font-family: "Myriad Pro";
   font-size: 1.2vw;
   font-weight: 900;
@@ -426,11 +422,11 @@
 @keyframes clickHint {
   0%,
   100% {
-    transform: translate(-50%, 0);
+    transform: translateY(0);
     opacity: 0.8;
   }
   50% {
-    transform: translate(-50%, -0.4vw);
+    transform: translateY(-0.4vw);
     opacity: 1;
   }
 }
@@ -481,7 +477,7 @@
     <div class="video-popup" id="videoPopup">
       <div class="video-box" id="videoBox">
         <button class="close-video-btn" type="button" id="closeVideoBtn">
-          <i class="fa-solid fa-xmark"></i>
+          <i data-icon="xmark"></i>
         </button>
 
         <div class="popup-video-frame" id="popupVideoFrame">
@@ -495,7 +491,7 @@
           ></video>
 
           <button class="video-center-play" type="button" id="centerPlayBtn">
-            <i class="fa-solid fa-play"></i>
+            <i data-icon="play"></i>
           </button>
 
           <div class="custom-controls">
@@ -514,7 +510,7 @@
             <div class="control-row">
               <div class="control-left">
                 <button class="control-btn play-pause-btn" id="playPauseBtn" type="button">
-                  <i class="fa-solid fa-play"></i>
+                  <i data-icon="play"></i>
                 </button>
 
                 <div class="time-text">
@@ -526,7 +522,7 @@
 
               <div class="control-right">
                 <button class="control-btn mute-btn" id="muteBtn" type="button">
-                  <i class="fa-solid fa-volume-high"></i>
+                  <i data-icon="volume-high"></i>
                 </button>
 
                 <input
@@ -540,7 +536,7 @@
                 />
 
                 <button class="control-btn fullscreen-btn" id="fullscreenBtn" type="button">
-                  <i class="fa-solid fa-expand"></i>
+                  <i data-icon="expand"></i>
                 </button>
               </div>
             </div>
@@ -554,6 +550,7 @@
       <source src="assets/audio/1.mp3" type="audio/mpeg" />
     </audio>
 
+    <script src="icons.js"></script>
     <script src="data.js"></script>
     <script src="script.js"></script>
 
@@ -656,12 +653,12 @@
 
         function updatePlayIcons() {
           if (popupVideo.paused) {
-            playPauseIcon.className = "fa-solid fa-play";
-            centerPlayIcon.className = "fa-solid fa-play";
+            setIcon(playPauseIcon, "play");
+            setIcon(centerPlayIcon, "play");
             centerPlayBtn.classList.remove("hide");
           } else {
-            playPauseIcon.className = "fa-solid fa-pause";
-            centerPlayIcon.className = "fa-solid fa-pause";
+            setIcon(playPauseIcon, "pause");
+            setIcon(centerPlayIcon, "pause");
             centerPlayBtn.classList.add("hide");
           }
         }
@@ -709,11 +706,11 @@
 
         function updateMuteIcon() {
           if (popupVideo.muted || popupVideo.volume === 0) {
-            muteIcon.className = "fa-solid fa-volume-xmark";
+            setIcon(muteIcon, "volume-xmark");
           } else if (popupVideo.volume < 0.5) {
-            muteIcon.className = "fa-solid fa-volume-low";
+            setIcon(muteIcon, "volume-low");
           } else {
-            muteIcon.className = "fa-solid fa-volume-high";
+            setIcon(muteIcon, "volume-high");
           }
         }
 
@@ -803,9 +800,9 @@
 
         function updateFullscreenIcon() {
           if (document.fullscreenElement === videoBox) {
-            fullscreenIcon.className = "fa-solid fa-compress";
+            setIcon(fullscreenIcon, "compress");
           } else {
-            fullscreenIcon.className = "fa-solid fa-expand";
+            setIcon(fullscreenIcon, "expand");
           }
         }
 
