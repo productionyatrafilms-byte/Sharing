@@ -132,8 +132,8 @@ nav {
   width: 8vw;
   height: 3vw;
   gap: 0.4vw;
-  border: 0.3vb solid white;
-  border-radius: 4vb;
+  border: 0.169vw solid white;
+  border-radius: 2.25vw;
   background: transparent;
 }
 
@@ -143,7 +143,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0.25vb solid white;
+  border: 0.141vw solid white;
   border-radius: 50%;
   font-size: 1.2vw;
   font-weight: 700;
@@ -178,7 +178,7 @@ nav {
 }
 
 .back-btn-link>a>img {
-  border-radius: 4vb !important;
+  border-radius: 2.25vw !important;
   width: 3vw;
   height: 3vw;
   display: inline-block;
@@ -210,10 +210,10 @@ nav {
   transform: translate(-50%);
   width: 40vw;
   height: 13vw;
-  border: 0.4vb solid white;
-  border-radius: 2vb;
+  border: 0.225vw solid white;
+  border-radius: 1.125vw;
   justify-content: center;
-  padding: 2vh;
+  padding: 1.125vw;
   color: white;
   transition: all 0.2s ease-in-out;
   transform-origin: center;
@@ -223,7 +223,7 @@ nav {
 .home-title:hover {
   background-color: #fff;
   color: #673dc2;
-  border: 0.4vb solid white;
+  border: 0.225vw solid white;
   animation-play-state: paused;
 }
 
@@ -243,6 +243,7 @@ nav {
 /* Sharing page */
 .sharing-page {
   background-color: #7f5bd4;
+  overflow: hidden;
 }
 
 .sharing-title {
@@ -250,28 +251,37 @@ nav {
   align-items: center;
   justify-content: center;
   position: fixed;
-  top: 5vh;
+  /* vertically centred on the nav row (home + language buttons, nav height 10vh) */
+  top: max(0.7vw, calc(5vh - 2.2vw));
   left: 50vw;
   transform: translate(-50%);
-  width: 28vw;
-  height: 18vh;
-  border: 0.4vb solid white;
+  width: 19vw;
+  height: 4.4vw;
+  border: 0.225vw solid white;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
-  border-radius: 2vb;
-  padding-top: 3vh !important;
+  border-radius: 1.125vw;
+  padding: 0 !important;
+  line-height: 1;
   color: white;
-  font-size: 6vw;
+  font-size: 3vw;
   font-weight: 600;
   word-break: keep-all;
+}
+
+/* Devanagari / Gujarati glyphs are taller: smaller text, more line room */
+body[data-lang="hi"] .sharing-title,
+body[data-lang="gu"] .sharing-title {
+  font-size: 2.5vw;
+  line-height: 1.5;
 }
 
 /* swiper */
 .swiper {
   width: 100%;
-  height: 50vh;
+  height: 31.5vw;
   border-radius: 2vw;
   overflow: hidden;
-  border: 1vb solid white;
+  border: 0.562vw solid white;
   box-shadow:
     0 0.2vw 0.4vw rgba(0, 0, 0, 0.25),
     0 0.88vw 1.6vw rgba(0, 0, 0, 0.15);
@@ -289,21 +299,21 @@ nav {
 }
 
 .swiper-slide img {
-  width: 50vw;
-  height: 48vh;
+  width: 56vw;
+  height: 30.3vw;
 }
 
 /* video sizing same as images */
 .swiper-slide .slide-media {
-  width: 50vw;
-  height: 48vh;
+  width: 56vw;
+  height: 30.3vw;
   object-fit: fill;
   display: block;
 }
 
 .swiper-pagination {
   position: fixed !important;
-  top: 65vh !important;
+  top: 32.7vw !important;
   /* keep if you want, but see note below */
   /* keep if you want */
   display: flex !important;
@@ -318,15 +328,16 @@ nav {
   height: 0.7vw !important;
   opacity: 1;
   background-color: transparent;
-  border: 0.1vb solid #673dc2;
+  border: 0.056vw solid #673dc2;
   margin: 0 !important;
 }
 
 .wrap {
-  width: 50vw;
-  height: 40vh;
+  width: 56vw;
+  height: 31.5vw;
   position: fixed;
-  top: 30vh;
+  /* centre the visual vertically when there is room (full screen), never higher than 12vw */
+  top: max(12vw, calc(50vh - 15.75vw));
   left: 50vw;
   transform: translate(-50%);
   display: grid;
@@ -371,7 +382,7 @@ nav {
 
 /* ---- Text 1 ---- */
 #dialogueText1 {
-
+  text-align: center;
   line-height: 1.2;
 }
 
@@ -383,15 +394,15 @@ nav {
 
 .dialogue-text1 {
   position: absolute;
-  left: 7%;
+  left: 12%;
   top: 1.2vw;
-  width: 35%;
+  width: 30%;
   height: 6.2vw;
-  font-size: 1.1vw;
+  font-size: 1.3vw;
   font-weight: 800;
   color: #673dc2;
   text-align: center !important;
-  padding: 1vw !important;
+  padding: 0.6vw !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -402,30 +413,47 @@ nav {
   position: absolute;
   left: 58%;
   top: 0.5vw;
-  width: 35%;
+  width: 30%;
   height: 6vw;
-  font-size: 1.1vw;
+  font-size: 1.3vw;
   font-weight: 800;
   color: #673dc2;
   text-align: center !important;
-  padding: 1vw;
+  padding: 0.6vw;
   display: flex;
   align-items: center;
+  justify-content: center;
   white-space: pre-line;
 }
 
 .navigation-btn {
   position: fixed !important;
   width: 7vw;
-  height: 6vh;
-  top: 50vh;
-  /* stable anchor */
-  right: 25vw;
-  transform: translateX(50%);
-  /* only horizontal */
+  height: 3.375vw;
+  /* .wrap is transformed, so "fixed" resolves against it: span the visual,
+     buttons just outside its left/right edges, vertically at the swiper's middle */
+  top: 15.75vw;
+  left: -4vw;
+  width: calc(100% + 8vw);
+  transform: translateY(-50%);
   z-index: 1000;
-  /* margin: 0!important; */
   display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.navigation-btn>div {
+  pointer-events: auto;
+}
+
+.navigation-btn .swiper-button-prev,
+.navigation-btn .swiper-button-next {
+  position: static !important;
+  margin-top: 0 !important;
+}
+
+.navigation-btn .swiper-button-next {
+  margin-left: auto !important;
 }
 
 .navigation-btn>div {
@@ -445,8 +473,9 @@ nav {
 
 .swiper-button-next {
   left: auto !important;
-  right: 0vw !important;
+  right: auto !important;
   margin: 0 !important;
+  margin-left: auto !important;
   transition:
     transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1),
     box-shadow 0.35s ease;
@@ -479,7 +508,7 @@ nav {
 
 #dialogue-verlay {
   position: absolute;
-  top: -3vh;
+  top: -1.688vw;
   left: -5%;
   width: 60%;
   height: 8vw;
@@ -740,4 +769,51 @@ main.page-exit {
   font-size: 1.3vw;
   font-family: "Myriad Pro";
 
+}
+
+/* ---- Sharing page, taller viewports (full screen / 16:9): use the extra height ---- */
+@media (max-aspect-ratio: 39/20) {
+  .wrap {
+    width: 62vw;
+    height: 34.9vw;
+    top: 14vw;
+  }
+
+  .swiper {
+    height: 34.9vw;
+  }
+
+  .swiper-slide img,
+  .swiper-slide .slide-media {
+    width: 62vw;
+    height: 33.5vw;
+  }
+
+  .swiper-pagination {
+    top: 36.1vw !important;
+  }
+
+  .navigation-btn {
+    top: 17.45vw;
+  }
+}
+
+/* dialogue bubbles: the visual is 62/56 wider here, so scale the bubble and its text areas with it */
+@media (max-aspect-ratio: 39/20) {
+  .dialogue-box {
+    top: -2.2vw;
+    height: 9.4vw;
+  }
+
+  .dialogue-text1 {
+    top: 1.33vw;
+    height: 6.86vw;
+    font-size: 1.4vw;
+  }
+
+  .dialogue-text2 {
+    top: 0.55vw;
+    height: 6.64vw;
+    font-size: 1.4vw;
+  }
 }
