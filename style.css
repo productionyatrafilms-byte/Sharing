@@ -20,26 +20,9 @@ body {
 }
 
 @font-face {
-  font-family: "Bree Serif";
-  src: url("./fonts/Bree%20Serif%20Bold.otf") format("opentype");
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: "Araboto";
-  src: url("./fonts/Araboto%20Black%20400.ttf") format("truetype");
-  font-weight: 400;
-}
-
-@font-face {
   font-family: "Baloo";
   src: url("./fonts/Baloo%20Regular%20400.ttf") format("truetype");
   font-weight: 400;
-}
-
-@font-face {
-  font-family: "Boldoa";
-  src: url("./fonts/Boldoa%20Mat.otf") format("opentype");
 }
 
 @font-face {
@@ -353,10 +336,10 @@ body[data-lang="gu"] .sharing-title {
 /* ---- DIALOGUE BOX (animation container) ---- */
 .dialogue-box {
   position: absolute;
-  top: -2.3vw;
-  left: -5%;
-  width: 79%;
-  height: 9.7vw;
+  top: -3.03vw;
+  left: -10.925%;
+  width: 90.85%;
+  height: 11.16vw;
   z-index: 9999;
   pointer-events: none;
   display: flex;
@@ -395,14 +378,14 @@ body[data-lang="gu"] .sharing-title {
 .dialogue-text1 {
   position: absolute;
   left: 12%;
-  top: 1.37vw;
+  top: 1.58vw;
   width: 30%;
-  height: 7.1vw;
+  height: 8.17vw;
   font-size: 1.5vw;
   font-weight: 800;
   color: #673dc2;
   text-align: center !important;
-  padding: 0.6vw !important;
+  padding: 1vw !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -412,14 +395,14 @@ body[data-lang="gu"] .sharing-title {
 .dialogue-text2 {
   position: absolute;
   left: 58%;
-  top: 0.57vw;
+  top: 0.66vw;
   width: 30%;
-  height: 6.9vw;
+  height: 7.94vw;
   font-size: 1.5vw;
   font-weight: 800;
   color: #673dc2;
   text-align: center !important;
-  padding: 0.6vw;
+  padding: 1vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -801,19 +784,19 @@ main.page-exit {
 /* dialogue bubbles: the visual is 62/56 wider here, so scale the bubble and its text areas with it */
 @media (max-aspect-ratio: 39/20) {
   .dialogue-box {
-    top: -2.5vw;
-    height: 10.8vw;
+    top: -3.31vw;
+    height: 12.42vw;
   }
 
   .dialogue-text1 {
-    top: 1.52vw;
-    height: 7.85vw;
+    top: 1.75vw;
+    height: 9.03vw;
     font-size: 1.6vw;
   }
 
   .dialogue-text2 {
-    top: 0.63vw;
-    height: 7.6vw;
+    top: 0.72vw;
+    height: 8.74vw;
     font-size: 1.6vw;
   }
 }
